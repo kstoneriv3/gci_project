@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+   <meta charset="utf-8">
+   <title>D3 デモ: 5 つの DIV </title>
+   <script type="text/javascript" src="../../gci_project_storage/d3.js"></script>
+   <style type="text/css">
+
+      div.bar {
+         display: inline-block;
+         width: 20px;
+         height: 75px;   /* この数値は実行時に上書きされます */
+         margin-right: 2px;
+         background-color: teal;
+      }
+
+   </style>
+</head>
+<body>
+<script type="text/javascript">
+
+   var dataset = [];                          // 配列の宣言と初期化
+   for (var i = 0; i < 25; i++) {          // ループを25回繰り返す
+      var newNumber = Math.random() * 30;  // 0～30のランダムな数を生成
+      dataset.push(newNumber);             // 生成した数を配列に追加
+   }
+
+   var data0 = d3.tsv(
+      "../../gci_project_storage/example_data.tsv"
+      , function(error, data) {
+      console.log(data);
+   });//python -m http.server 8888 で相対パスアクセス
+
+   d3.select("body").selectAll("div")
+         .data(dataset)
+         .enter()
+         .append("div")
+         .attr("class", "bar")
+         .style("height", function(d){return 5*d+"px";} );
+</script>
+</body>
+</html>
