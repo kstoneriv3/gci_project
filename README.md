@@ -1,5 +1,6 @@
 # gci_project  2017_team16
-※Markdown記法で書けるので、各自書き込んでください。<br>
+※@Contributors
+　Markdown記法で書けるので、各自書き込んでください。<br>
 　変更したら、ぺージ下部"Commit Changes"で変更を確定してください。<br>
 
 ### ◇概要：<br>
