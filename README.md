@@ -11,12 +11,12 @@
 
 ##### 概要
 
-|作業内容|ディレクトリ|担当|
-|:--|:--|:--|
-|スクレイピング|/Scraping|奈良岡|
-|ウェブサーバーを立てる|/Web_Server|清野|
-|予測モデルの作成|/Prediction|石川|
-|可視化|/Visualization|石川|
+|作業内容|ディレクトリ|担当|github-id|
+|:--|:--|:--|:--|
+|スクレイピング|/Scraping|奈良岡|Makoto95|
+|ウェブサーバーを立てる|/Web_Server|清野|barisuke|
+|予測モデルの作成|/Prediction|石川|kstoneriv3|
+|可視化|/Visualization|石川|kstoneriv3|
 
 ### ◇作業詳細：
 
