@@ -1,7 +1,7 @@
 # Flask などの必要なライブラリをインポートする
 from flask import Flask, render_template, request, redirect, url_for
 import numpy as np
-import test
+#import test
 
 # 自身の名称を app という名前でインスタンス化する
 app = Flask(__name__)
@@ -38,9 +38,9 @@ def post():
         # エラーなどでリダイレクトしたい場合はこんな感じで
         return redirect(url_for('index'))
 
-@app.route('/get_pred0')
-def get_pred0():
-	return str(test.get_pred(test.analytical_data0))+str(test.analytical_data0)
+#@app.route('/get_pred0')
+#def get_pred0():
+#	return str(test.get_pred(test.analytical_data0))+str(test.analytical_data0)
 
 @app.route('/bar_chart')
 def bar_chart():
