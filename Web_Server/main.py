@@ -1,7 +1,7 @@
 # Flask などの必要なライブラリをインポートする
 from flask import Flask, render_template, request, redirect, url_for
 import numpy as np
-import test
+#import test
 
 # 自身の名称を app という名前でインスタンス化する
 app = Flask(__name__)
