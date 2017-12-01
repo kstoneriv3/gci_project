@@ -230,7 +230,7 @@ def get_info(url):
         "renewal_fee":sort[19],
         "rent":sort[2],
         "right_money":sort[24],
-        "south":detail_tag_contents[2],
+        # "south":detail_tag_contents[2],
         "status":sort[15],
         "structure":sort[9],
         "surroundings":sort[27],
@@ -477,9 +477,9 @@ def get_info(url):
     del item_dict["single"]
     del item_dict["student"]
     del item_dict["direction"]
-    del item_dict["structure"]
-    del item_dict["status"]
-    del item_dict["transaction_type"]
+    # del item_dict["structure"]
+    # del item_dict["status"]
+    # del item_dict["transaction_type"]
     del item_dict["bath_style"]
 
 
@@ -540,7 +540,7 @@ def get_info(url):
     item_dict['auto_lock'],
     item_dict['bath_toilet'],
     item_dict['reheating'],
-    item_dict['south'],
+    # item_dict['south'],
     item_dict['wash_basin'],
     item_dict['washing_machine'],
     item_dict['top_floor'],
@@ -615,7 +615,7 @@ def get_info(url):
     item_dict['bath_style_1'],
     item_dict['bath_style_2'],
     item_dict['url'],
-    item_dict['name'],
+    # item_dict['name'],
     ]
     ,index = [
     'traffic',
@@ -651,7 +651,7 @@ def get_info(url):
     'auto_lock',
     'bath_toilet',
     'reheating',
-    'south',
+    # 'south',
     'wash_basin',
     'washing_machine',
     'top_floor',
@@ -726,8 +726,8 @@ def get_info(url):
     'bath_style_1',
     'bath_style_2',
     'url',
-    'name'
+    # 'name'
 
            ])
 
-    return series
+    return (series,name)
