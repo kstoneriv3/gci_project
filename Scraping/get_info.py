@@ -535,6 +535,9 @@ def get_info(url):
     item_dict['parking_detail'],
     item_dict['reform'],
     item_dict['total_units'],
+    item_dict['status'],
+    item_dict['structure'],
+    item_dict['transaction_type'],
     item_dict['balcony'],
     item_dict['air_conditioner'],
     item_dict['auto_lock'],
@@ -645,6 +648,9 @@ def get_info(url):
     'parking',
     'parking_detail',
     'reform',
+    'status',
+    'structure',
+    'transaction_type',
     'total_units',
     'balcony',
     'air_conditioner',
@@ -731,4 +737,5 @@ def get_info(url):
            ])
     
     return (building_name,series)
+
 
