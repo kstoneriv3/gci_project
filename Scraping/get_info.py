@@ -730,4 +730,4 @@ def get_info(url):
 
            ])
 
-    return (series,name)
+    return (series,building_name)
