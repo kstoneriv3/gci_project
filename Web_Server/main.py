@@ -1,27 +1,29 @@
 # Flask などの必要なライブラリをインポートする
 from flask import Flask, render_template, request, redirect, url_for
-import numpy as np
+import pandas as pd
+
+# ソースコードのインポート
 import predictor
+import convert_raw_data
+import convert_raw_data
+import convert_to_json
+import get_info
+import data_box
+
+raw_data = data_box.raw_data
+analytical_data = convert_raw_data.get_AnalyticalData(raw_data)
 
 # 自身の名称を app という名前でインスタンス化する
 app = Flask(__name__)
 
 # メッセージをランダムに表示するメソッド
-def picked_up():
-    messages = [
-        "こんにちは、あなたの名前を入力してください",
-        "やあ！お名前は何ですか？",
-        "あなたの名前を教えてね"
-    ]
-    # NumPy の random.choice で配列からランダムに取り出し
-    return np.random.choice(messages)
 
 # ここからウェブアプリケーション用のルーティングを記述
 # index にアクセスしたときの処理
 @app.route('/')
 def index():
     title = "ようこそ"
-    message = picked_up()
+    message = "URLを入力してください"
     # index.html をレンダリングする
     return render_template('index.html', message=message, title=title)
 
@@ -40,7 +42,8 @@ def post():
 
 @app.route('/get_pred0')
 def get_pred0():
-	return str(predictor.get_pred(predictor.analytical_data0))+str(predictor.analytical_data0)
+	text_to_render = convert_to_json.convert_to_json(analytical_data,predictor.get_pred)
+	return text_to_render
 
 @app.route('/bar_chart')
 def bar_chart():
