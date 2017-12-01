@@ -1,14 +1,16 @@
+
+
 from bs4 import BeautifulSoup
 import requests
 import re
 import pandas as pd
 from pandas import Series
 
-
 def get_info(url):
-    # url = 'https://chintai.mynavi.jp/tokyo/101/room2374200003472.html'
+    # url = 'https://chintai.mynavi.jp/tokyo/113/room121700007311.html'
     response = requests.get(url)
     soup = BeautifulSoup(response.content,'lxml')
+
 
     a = soup.select("dt") #基本データ項目取得
     b = soup.select("dd") #基本データ内容取得
@@ -22,6 +24,7 @@ def get_info(url):
     j = soup.select("#top > div.wr_layout > div.mt20.search_name_area.clear-fix > h1") #物件名
 
 
+
     def shaping_datas(datas):
         ret = [0 for i in range(len(datas))]
         for i in range(len(datas)):
@@ -29,11 +32,14 @@ def get_info(url):
             ret[i] = re.sub("<.*?>","",ret[i])
         return ret
 
+
+
     def conv_str(datas): 
         ret = [0 for i in range(len(datas))]
         for i in range(len(datas)):
             ret[i] = str(datas[i])
         return ret
+
 
     def modify_detail(detail):
         ret = ['' for i in range(10)]
@@ -44,11 +50,13 @@ def get_info(url):
                 ret[i] = '0'
         return ret
 
+
     def del_id(datas):
         for i in range(len(datas)):
             if("物件ID" in datas[i]):
                 del datas[i]
         return datas
+
 
     basic_menu = shaping_datas(a)[:9]
     basic_contents = shaping_datas(b)[:9]
@@ -58,8 +66,18 @@ def get_info(url):
     detail_tag_contents = modify_detail(conv_str(i))
     building_name = shaping_datas(j)
 
+
+
     menu = basic_menu + detail_menu
     contents = basic_contents + detail_contents 
+
+
+#     for i in range(len(menu)):
+#         print(menu[i],contents[i])
+
+
+    menu[3] = re.sub("地図を見る","",menu[3])
+
 
     def sorting(menu,contents):
         index = ['' for i in range(39)]
@@ -119,8 +137,57 @@ def get_info(url):
                 ret[index[i]] = contents[i]
         return ret
 
+
+    # In[12]:
+
     sort = ['' for i in range(39)]
     sort = sorting(menu, contents)
+
+
+    # In[13]:
+
+    item_list = [
+         '交通',#0
+         '所在地',#1
+         '賃料(管理費・共益費)',#2
+         '敷金 (保証金)',#3
+         '間取り',#4
+         '面積',#5
+         '方角',#6
+         '築年数',#7
+         '備考',#8
+         '建物構造',#9
+         '所在階/階数',#10
+         '間取り詳細',#11
+         '駐車場',#12
+         '物件ID',#13
+         '引渡',#14
+         '現況',#15
+         '取引態様',#16
+         '住宅保険',#17
+         '保証会社',#18
+         '更新料',#19
+         '償却・敷引',#20
+         '敷金積増し',#21
+         '契約期間',#22
+         '仲介手数料',#23
+         '権利金',#24
+         'バルコニー面積',#25
+         '総戸数',#26
+         '周辺環境',#27
+         'その他費用',#28
+         'その他月額費用',#29
+         '保証人代行',#30
+         'リフォーム',#31
+         '位置・方角',#32
+         'バス・トイレ',#33
+         '設備/サービス',#34
+         '入居条件',#35
+         'その他',#36
+         '礼金 (敷引・償却金)',#37
+         'キッチン'#38
+         ]
+
 
     item_dict = {
         "address":sort[1],
@@ -176,6 +243,7 @@ def get_info(url):
         "washing_machine":detail_tag_contents[3]
     }
 
+
     def delete(char, item):
         if item.find(char) > -1:
             item = ''
@@ -227,7 +295,7 @@ def get_info(url):
         return ret
 
     def del_yen(item):
-        ret = re.sub(",","",item)
+        ret = re.sub("\,","",item)
         ret = re.sub("円","",item)
         return ret
 
@@ -240,6 +308,8 @@ def get_info(url):
             ret = re.sub("ヶ月","",item)
             ret = int(ret) * int(rent)
         return ret
+
+
 
     #単位除去・テーブル分割
 
@@ -351,6 +421,14 @@ def get_info(url):
     key_money = re.sub("\(.*?\)","",item_dict["key_money"])
 
 
+    if("要／" in item_dict["insurance"]):
+        item_dict["insurance"] = re.sub("要／","",item_dict["insurance"])
+        item_dict["insurance"] = re.sub("円","",item_dict["insurance"])
+        item_dict["insurance"] = re.sub(",","",item_dict["insurance"])
+        
+
+
+
     def convert_dummies(dummy_list,num):
         ret = [0 for i in range(len(dummy_list))]
         for i in range(len(dummy_list)):
@@ -358,6 +436,7 @@ def get_info(url):
             if(num == i):
                 ret[i] = 1
         return ret
+
 
     def convert_dummies2(dummy_list,num):
         ret = [0 for i in range(len(dummy_list)+1)]
@@ -367,10 +446,12 @@ def get_info(url):
                 ret[i] = 1
         return ret[1:]
 
+
     def write_dummy(dummy_list,num,dic):
         for i in range(len(dummy_list)):
             dic.update({dummy_list[i]:num[i]})
         return dic
+
 
     dum_elderly = ["elderly_0","elderly_1","elderly_2"]
     dum_company = ["company_0","company_1","company_2"]
@@ -402,13 +483,27 @@ def get_info(url):
     del item_dict["bath_style"]
 
 
+
+
+
+
+    brokerage_fee = convert_yen(rent2, item_dict["brokerage_fee"])
+    brokerage_fee = re.sub("\（.*?\）","",brokerage_fee)
+    brokerage_fee = re.sub(",","",brokerage_fee)
+
+    depreciation = convert_yen(rent2, item_dict["depreciation"])
+    depreciation = re.sub("\（.*?\）","",depreciation)
+    depreciation = re.sub(",","",depreciation)
+
+
     item_dict.update({"deposit":convert_yen(rent2, deposit),
                       "key_money":convert_yen(rent2, key_money),
-                      "brokerage_fee":convert_yen(rent2, item_dict["brokerage_fee"]),
-                      "depreciation":convert_yen(rent2, item_dict["depreciation"]),
+                      "brokerage_fee":convert_yen(rent2, brokerage_fee),
+                      "depreciation":convert_yen(rent2, depreciation),
                       "insurance":convert_yen(rent2, item_dict["insurance"]),
                       "renewal_fee":convert_yen(rent2, item_dict["renewal_fee"]),
                      })
+
 
 
     series = Series([
@@ -636,5 +731,3 @@ def get_info(url):
            ])
 
     return series
-
-
