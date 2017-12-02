@@ -1,0 +1,84 @@
+<!--ラジオボタンの表示-->
+<table>
+    <tr>
+        <th></th>
+        <td>
+            <label><input type="radio" name="status" onclick="register();" checked="checked">床面積</label>
+            <label><input type="radio" name="status" onclick="register();">築年数</label>
+            <label><input type="radio" name="status" onclick="register();">最寄駅への所要時間</label>
+        </td>
+    </tr>
+</table>
+
+<!--表示非表示の切り替え-->
+<div id="rent_area_scatter">
+        <script type="text/javascript">
+            var svg = dimple.newSvg("#rent_area_scatter", 590, 400);
+            var myChart = new dimple.chart(svg, data);
+            myChart.setBounds(60, 30, 500, 330);
+            myChart.addMeasureAxis("x", "床面積");
+            myChart.addMeasureAxis("y", "価格(家賃)");
+
+            myChart.addSeries("価格(家賃)",dimple.plot.scatter);
+            myChart.addLegend(200, 10, 360, 20, "right");
+            myChart.draw();
+        </script>
+</div>
+
+
+<div id="rent_old_scatter">
+        <script type="text/javascript">
+
+            var rent_old_data = [];
+            for(element in data){
+                rent_old_data.push({'価格(家賃)':data[element]["価格(家賃)"],'築年':data[element]["築年"]});
+            };
+            var svg_rent_old_scatter = dimple.newSvg("#rent_old_scatter", 590, 400);
+            var myChart = new dimple.chart(svg_rent_old_scatter, rent_old_data);
+            myChart.setBounds(60, 30, 500, 330);
+            myChart.addMeasureAxis("x", "築年");
+            myChart.addMeasureAxis("y", "価格(家賃)");
+            myChart.addSeries("価格(家賃)", dimple.plot.bubble);
+            myChart.addLegend(200, 10, 360, 20, "right");
+            myChart.draw();
+        </script>
+</div>
+
+<div id="rent_distance_scatter">
+        <script type="text/javascript">
+
+            var svg_rent_distance_scatter = dimple.newSvg("#rent_distance_scatter", 590, 400);
+            var myChart = new dimple.chart(svg_rent_distance_scatter, data);
+            myChart.setBounds(60, 30, 500, 330);
+            myChart.addMeasureAxis("x", '最寄駅への所要時間');
+            myChart.addMeasureAxis("y", "価格(家賃)");
+            myChart.addSeries("価格(家賃)", dimple.plot.bubble);
+            myChart.addLegend(200, 10, 360, 20, "right");
+            myChart.draw();
+        </script>
+</div>
+
+
+<script type="text/javascript">
+function register() {
+    radio = document.getElementsByName('status');
+    if (radio[0].checked) {
+        document.getElementById('rent_area_scatter').style.display = ""; 
+        document.getElementById('rent_old_scatter').style.display = "none"; 
+        document.getElementById("rent_distance").style.display = "none"; 
+    } else if (radio[1].checked) {
+        document.getElementById('rent_area_scatter').style.display = "none"; 
+        document.getElementById('rent_old_scatter').style.display = "";
+        document.getElementById('rent_distance"').style.display = "none";
+    } else if (radio[2].checked) {
+        document.getElementById('rent_area_scatter').style.display = "none"; 
+        document.getElementById('rent_old_scatter').style.display = "none";
+        document.getElementById('rent_distance"').style.display = "";
+    }
+}
+
+//オンロードさせ、リロード時に選択を保持
+window.onload = register;
+
+    
+</script>
