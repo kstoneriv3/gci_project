@@ -492,6 +492,10 @@ def get_info(url):
     depreciation = convert_yen(rent2, item_dict["depreciation"])
     depreciation = re.sub("\（.*?\）","",depreciation)
     depreciation = re.sub(",","",depreciation)
+    if ('\xa0' in depreciation):
+       depreciation = re.sub("\xa0","",depreciation)
+
+
 
 
     item_dict.update({"deposit":convert_yen(rent2, deposit),
@@ -501,6 +505,25 @@ def get_info(url):
                       "insurance":convert_yen(rent2, item_dict["insurance"]),
                       "renewal_fee":convert_yen(rent2, item_dict["renewal_fee"]),
                      })
+    
+    def conv_int(item):
+        ret = item
+        if(item == ''):
+            pass
+        else:
+            ret  = int(item)
+        return ret
+
+    def conv_float(item):
+        ret = item
+        if(item == ''):
+            pass
+        else:
+            ret  = float(item)
+
+        return ret
+
+
 
 
 
@@ -508,46 +531,46 @@ def get_info(url):
     item_dict['traffic'],
     item_dict['address'],
     item_dict['rent'],
-    item_dict['area'],
+    conv_float(item_dict['area']),
     item_dict['deposit'],
     item_dict['key_money'],
-    item_dict['brokerage_fee'],
+    conv_int(item_dict['brokerage_fee']),
     item_dict['date'],
     item_dict['layout'],
     item_dict['layout_detail'],
-    item_dict['depreciation'],
+    conv_int(item_dict['depreciation']),
     item_dict['facility'],
-    item_dict['flooring'],
+    conv_int(item_dict['flooring']),
     item_dict['guarantee'],
     item_dict['guarantor'],
-    item_dict['insurance'],
+    conv_int(item_dict['insurance']),
     item_dict['renewal_fee'],
-    item_dict['administration_fee'],
+    conv_int(item_dict['administration_fee']),
     item_dict['remark'],
-    item_dict['locality'],
-    item_dict['buildings_height'],
-    item_dict['buildings_undergrand'],
+    conv_int(item_dict['locality']),
+    conv_int(item_dict['buildings_height']),
+    conv_int(item_dict['buildings_undergrand']),
     item_dict['surroundings'],
     item_dict['other_expence'],
-    item_dict['parking'],
+    conv_int(item_dict['parking']),
     item_dict['parking_detail'],
     item_dict['reform'],
     item_dict['total_units'],
-    item_dict['status'],
+    conv_int(item_dict['status']),
     item_dict['structure'],
     item_dict['transaction_type'],
-    item_dict['balcony'],
-    item_dict['air_conditioner'],
-    item_dict['auto_lock'],
-    item_dict['bath_toilet'],
-    item_dict['reheating'],
+    conv_float(item_dict['balcony']),
+    conv_int(item_dict['air_conditioner']),
+    conv_int(item_dict['auto_lock']),
+    conv_int(item_dict['bath_toilet']),
+    conv_int(item_dict['reheating']),
     # item_dict['south'],
-    item_dict['wash_basin'],
-    item_dict['washing_machine'],
+    conv_int(item_dict['wash_basin']),
+    conv_int(item_dict['washing_machine']),
     item_dict['top_floor'],
     item_dict['corner_room'],
     item_dict['immediate'],
-    item_dict['upper'],
+    conv_int(item_dict['upper']),
     item_dict['shower'],
     item_dict['bath_drier'],
     item_dict['washlet'],
@@ -563,12 +586,12 @@ def get_info(url):
     item_dict['IH_stove'],
     item_dict['electric_stove'],
     item_dict['stove_num'],
-    item_dict['office'],
-    item_dict['instrument'],
-    item_dict['togather'],
-    item_dict['share'],
-    item_dict['foreigner'],
-    item_dict['pet'],#------------------------------
+    conv_int(item_dict['office']),
+    conv_int(item_dict['instrument']),
+    conv_int(item_dict['togather']),
+    conv_int(item_dict['share']),
+    conv_int(item_dict['foreigner']),
+    conv_int(item_dict['pet']),#------------------------------
     item_dict['elderly_0'],
     item_dict['elderly_1'],
     item_dict['elderly_2'],
@@ -734,4 +757,4 @@ def get_info(url):
 
            ])
     
-    return (building_name,series)
+    return (building_name[0],series)

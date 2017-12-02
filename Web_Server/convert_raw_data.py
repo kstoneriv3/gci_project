@@ -109,9 +109,10 @@ null_colnames = pd.Series([
 
 #欠損地にフラグを立ててカラムを追加
 def get_NullFixed(data):
-	data["isNull_" + null_colnames] = data[null_colnames].isnull()
-	data[null_colnames + "_Null_to_Zero"] = data[null_colnames].fillna(0)
-	return data
+    data["isNull_" + null_colnames] = data[null_colnames].isnull()
+    data[null_colnames + "_Null_to_Zero"] = data[null_colnames].fillna(0)
+    data = data.apply(lambda col:col.apply(lambda x:0 if x=='' else x),axis=1)
+    return data
 
 #最寄駅情報の抽出
 

@@ -213,8 +213,8 @@ def get_Miscellaneous_added(df_new,regional_data):
 	df_new["フローリング"] = regional_data.flooring.apply(lambda TF:'フローリング〇' if TF else 'フローリング×')
 	return df_new
 
-def get_PropertyTag_added(df_new,regional_data,DF_analytical_data):
-	tag_property = lambda TF:"選択された物件" if TF else "周囲の物件 (500m県内) "
+def get_PropertyTag_added(df_new,regional_data,DF_analytical_data,property_name):
+	tag_property = lambda TF:property_name if TF else "周囲の物件 (500m県内) "
 	df_new["選択物件"] = (regional_data.url==list(DF_analytical_data.url)[0]).apply(tag_property)
 	return df_new
 
@@ -241,7 +241,7 @@ def render_txt(df_new):
 
 	return txt_to_render
 
-def convert_to_json(DF_analytical_data,get_pred):
+def convert_to_json(DF_analytical_data,get_pred,property_name):
 	regional_data = get_RegionalData(DF_analytical_data)
 	df_new = get_df_new_created(regional_data)
 	df_new = get_Prediction_added(df_new,regional_data,get_pred)
@@ -251,5 +251,5 @@ def convert_to_json(DF_analytical_data,get_pred):
 	df_new = get_Direction_added(df_new,regional_data)
 	df_new = get_StoveNum_added(df_new,regional_data)
 	df_new = get_Miscellaneous_added(df_new,regional_data)
-	df_new = get_PropertyTag_added(df_new,regional_data,DF_analytical_data)
+	df_new = get_PropertyTag_added(df_new,regional_data,DF_analytical_data,property_name)
 	return render_txt(df_new)

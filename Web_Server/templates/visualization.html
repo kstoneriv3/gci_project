@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+  <!-- Form
+  ================================================== -->
+<header>
+  <script type="text/javascript">
+    data = {{ data }}
+  </script>>
+</header>>
+<body style="background: url(/static/style/fig1.jpg) 0 0 no-repeat;　padding:60px;margin: 30px auto; background-size:cover;align-items: center;">
+<div class="form" style="align-items: center;" >
+  <div class="container" style="align-items: center;margin: auto;padding:20px;" >
+    <div class="row">
+      <div class="col-md-12" style="background-color: #fff;width:600px;">
+        <p class="lead" >
+            {{ message }}
+        </p>
+      </div>
+    </div>
+    <div class="row2" style="align-items: center;margin: auto;" >
+      <div style="margin-top:150px;background-color: #fff;padding:20px;width:350px;align-items: center;">
+        <p class="note" >
+          別の物件を検索：<br>
+          <form action="/post" method="post" class="form-inline">
+            <label for="name">URL</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+            <button type="submit" class="btn btn-default">送信する</button>
+          </form>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+{% endblock %}
