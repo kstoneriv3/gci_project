@@ -10,6 +10,7 @@ import convert_to_json
 import get_info
 import data_box
 
+
 def respond_url_query(url):
     info = get_info.get_info(url)
     print("retrieving")
@@ -19,7 +20,7 @@ def respond_url_query(url):
     print("converting to analytical_data")
     text_to_render = convert_to_json.convert_to_json(analytical_data,predictor.get_pred,property_name)
     print("converting to json")
-    return render_template('visualization.html',title=property_name,message="ここにグラフを表示します",data=text_to_render)
+    return render_template('visualization.html',title=property_name,message="以下グラフが表示されます",data=text_to_render)
 
 
 # 自身の名称を app という名前でインスタンス化する

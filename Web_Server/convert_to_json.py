@@ -247,9 +247,10 @@ def convert_to_json(DF_analytical_data,get_pred,property_name):
 	df_new = get_Prediction_added(df_new,regional_data,get_pred)
 	df_new = get_StationDist_added(df_new,regional_data)
 	df_new = get_RoomInfo_added(df_new,regional_data)
-	df_new = get_Direction_added(df_new,regional_data)
+	df_new = get_Structure_sdded(df_new,regional_data)
 	df_new = get_Direction_added(df_new,regional_data)
 	df_new = get_StoveNum_added(df_new,regional_data)
 	df_new = get_Miscellaneous_added(df_new,regional_data)
 	df_new = get_PropertyTag_added(df_new,regional_data,DF_analytical_data,property_name)
+	df_new["count"] = 1
 	return render_txt(df_new)

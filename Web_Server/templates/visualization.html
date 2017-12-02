@@ -2,11 +2,11 @@
 {% block content %}
   <!-- Form
   ================================================== -->
-<header>
+<head>
   <script type="text/javascript">
     data = {{ data }}
   </script>>
-</header>>
+</head>
 <body style="background: url(/static/style/fig1.jpg) 0 0 no-repeat;　padding:60px;margin: 30px auto; background-size:cover;align-items: center;">
 <div class="form" style="align-items: center;" >
   <div class="container" style="align-items: center;margin: auto;padding:20px;" >
@@ -15,6 +15,42 @@
         <p class="lead" >
             {{ message }}
         </p>
+            <script>
+            //dataの価格(家賃)帯を3分割する
+            //価格帯というkeyを追加　取りうるvalueはlow middle high
+            var max_rent = Math.max.apply(null,
+                        Object.keys(data).map(function(e) {
+                                return data[e]["価格(家賃)"];
+                        }));
+            var min_rent = Math.min.apply(null,
+                        Object.keys(data).map(function(e) {
+                                return data[e]["価格(家賃)"];
+                        }));
+
+            var three_devided_rent_value = (max_rent - min_rent) / 3.0;
+  
+            for(element in data){
+                if(data[element]["価格(家賃)"] >= min_rent && data[element]["価格(家賃)"] < min_rent + three_devided_rent_value){
+                    data[element]['価格帯'] = 'low';
+                }else if(data[element]["価格(家賃)"] >= min_rent + three_devided_rent_value && data[element]["価格(家賃)"] < min_rent + three_devided_rent_value * 2){
+                    data[element]['価格帯'] = 'middle';
+                }else{
+                    data[element]['価格帯'] = 'high';
+                }
+            }
+          </script>
+          <div id="VerticalGroupedBar">
+            <script type="text/javascript">
+            var svg_rent_structure = dimple.newSvg("#VerticalGroupedBar", 590, 400);
+            var myChart = new dimple.chart(svg_rent_structure, data);
+            myChart.setBounds(60, 30, 510, 330)
+            myChart.addCategoryAxis("x", "価格帯");
+            myChart.addMeasureAxis("y", "count");
+            myChart.addSeries("建物構造", dimple.plot.bar);
+            myChart.addLegend(65, 10, 510, 20, "right");
+            myChart.draw();
+            </script>
+          </div>
       </div>
     </div>
     <div class="row2" style="align-items: center;margin: auto;" >
