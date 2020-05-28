@@ -14,7 +14,7 @@
 |作業内容|ディレクトリ|担当|github-id|
 |:--|:--|:--|:--|
 |スクレイピング|/Scraping|奈良岡|Makoto95|
-|ウェブサーバーを立てる(途中でGive Up)|/Web_Server|石川|kstoneriv3|
+|ウェブサーバーを立てる|/Web_Server|石川|kstoneriv3|
 |予測モデルの作成|/Prediction|石川|kstoneriv3|
 |可視化|/Visualization|清野|barisuke|
 
